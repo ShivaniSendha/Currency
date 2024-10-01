@@ -1,0 +1,68 @@
+<div class="MainContainer">
+    <div class="currency-converter">
+        <h1>Currency Converter</h1>
+        <div>
+            <label for="amount">Amount:</label>
+            <input type="number" [(ngModel)]="amount" id="amount" placeholder="Enter amount" min="0" />
+        </div>
+
+        <div>
+            <label for="baseCurrency"></label>
+            <select [(ngModel)]="baseCurrency" id="baseCurrency" (change)="onCurrencyChange()">
+                <option *ngFor="let currency of currencies" [value]="currency">{{ currency }}</option>
+            </select>
+        </div>
+        <div class="btn">
+            <button class="button" (click)="exchangeCurrencies()" type="button">
+                <i class="fas fa-exchange-alt "></i> <!-- You can use an icon here -->
+            </button>
+        </div>
+        <div>
+            <label for="targetCurrency"></label>
+            <select [(ngModel)]="targetCurrency" id="targetCurrency" (change)="onCurrencyChange()">
+                <option *ngFor="let currency of currencies" [value]="currency">{{ currency }}</option>
+            </select>
+        </div>
+
+
+
+        <button (click)="convert()" [disabled]="loading">Convert</button>
+
+        <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
+
+        <div *ngIf="!loading && convertedAmount !== null">
+            <p>Converted Amount: {{ convertedAmount | number:'1.2-2' }} {{ targetCurrency }}</p>
+            <p *ngIf="lastUpdated">Last Updated: {{ lastUpdated | date:'short' }}</p>
+        </div>
+
+        <div *ngIf="loading">Loading...</div>
+
+    </div>
+
+
+    <div class="container">
+        <h1>{{ baseCurrency }} to {{ targetCurrency }} Exchange Rate</h1>
+        <div class="stats-section">
+            <h2>Last 14 Days</h2>
+            <div class="stat">
+                <span class="label">High:</span>
+                <span class="value">{{ stats.high | number:'1.2-2' }}</span>
+            </div>
+            <div class="stat">
+                <span class="label">Low:</span>
+                <span class="value">{{ stats.low | number:'1.2-2' }}</span>
+            </div>
+            <div class="stat">
+                <span class="label">Average:</span>
+                <span class="value">{{ stats.average | number:'1.2-2' }}</span>
+            </div>
+            <div class="stat">
+                <span class="label">Volatility:</span>
+                <span class="value">{{ stats.volatility | number:'1.2-2' }}%</span>
+            </div>
+        </div>
+    </div>
+
+
+    <!--ading here-->
+</div>
